@@ -1,0 +1,235 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Projects</title>
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg" />
+    <style>
+      :root {
+        --primary: rgb(30, 30, 30);
+        --secondary: rgb(216, 180, 131);
+        --border: rgba(154, 130, 95, 0.775);
+        --boxbg: rgb(40, 40, 40);
+        --sgreen: rgb(119, 255, 121);
+        --glow: rgba(119, 255, 121, 0.3);
+      }
+
+      * {
+        font-family: monospace;
+        box-sizing: border-box;
+      }
+
+      body {
+        margin: 0;
+        background-color: var(--primary);
+        color: var(--secondary);
+        padding: 50px 20px;
+      }
+
+      h1 {
+        text-align: center;
+        font-size: 2.5em;
+        margin-bottom: 50px;
+        color: var(--secondary);
+        text-shadow: 0 0 10px var(--glow);
+        letter-spacing: 1px;
+      }
+
+      .team-grid {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+        gap: 40px;
+        max-width: 1200px;
+        margin: auto;
+      }
+
+      .member-card {
+        background: linear-gradient(145deg, #2e2e2e, #202020);
+        border: 2px solid var(--border);
+        border-radius: 16px;
+        padding: 25px;
+        text-align: center;
+        position: relative;
+        overflow: hidden;
+        transition: all 0.3s ease;
+      }
+
+      .member-card::before {
+        content: "";
+        position: absolute;
+        top: -50%;
+        left: -50%;
+        width: 200%;
+        height: 200%;
+        background: radial-gradient(circle, var(--border) 0%, transparent 60%);
+        animation: pulse 6s infinite ease-in-out;
+        z-index: 0;
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          transform: scale(1);
+          opacity: 0.3;
+        }
+        50% {
+          transform: scale(1.2);
+          opacity: 0.5;
+        }
+      }
+
+      .member-content {
+        position: relative;
+        z-index: 1;
+      }
+
+      .member-photo {
+        width: 160px;
+        height: 160px;
+        object-fit: cover;
+        border-radius: 50%;
+        border: 4px solid var(--secondary);
+        margin-bottom: 15px;
+        box-shadow: 0 0 5px var(--secondary);
+        transition: transform 0.3s ease;
+      }
+
+      .member-card:hover .member-photo {
+        transform: scale(1.05);
+      }
+
+      .member-name {
+        font-size: 1.4em;
+        font-weight: bold;
+        color: var(--secondary);
+        margin-bottom: 8px;
+      }
+
+      .member-bio {
+        font-size: 0.95em;
+        margin-bottom: 12px;
+        font-style: italic;
+        opacity: 0.85;
+      }
+
+      .linktree {
+        text-decoration: none;
+        color: var(--secondary);
+        border: 1px solid var(--border);
+        padding: 6px 16px;
+        border-radius: 20px;
+        font-weight: bold;
+        transition: all 0.3s ease;
+        display: inline-block;
+      }
+
+      .linktree:hover {
+        background-color: var(--sgreen);
+        color: var(--primary);
+        border-color: var(--sgreen);
+      }
+
+      @media (max-width: 500px) {
+        .member-photo {
+          width: 120px;
+          height: 120px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <h1>🍁 Projects</h1>
+
+    <div class="team-grid">
+      <div class="member-card">
+        <div class="member-content">
+          <img
+            class="member-photo"
+            src="images/1-180.png"
+            alt="180 günde masal projesi"
+          />
+          <div class="member-name">180 Günde Devr-i Masal</div>
+          <div class="member-bio">(Paperback Book - 2025 Q3)</div>
+          <a
+            class="linktree"
+            href="https://www.instagram.com/p/DJsGCXvKtLs/"
+            target="_blank"
+            >TBA...</a
+          >
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-content">
+          <img class="member-photo" src="images/2-blind.png" alt="blind man" />
+          <div class="member-name">Blind Man's Bluff</div>
+          <div class="member-bio">(Video Game - 2025 Q4)</div>
+          <a
+            class="linktree"
+            href="https://itch.io/blog/966332/blind-mans-bluff-tba"
+            target="_blank"
+            >TBA...</a
+          >
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-content">
+          <img class="member-photo" src="images/3-afana.png" alt="afana" />
+          <div class="member-name">AFANA</div>
+          <div class="member-bio">(Research & Translation - 2026)</div>
+          <a class="linktree" href="https://www.afana.org/" target="_blank"
+            >Website</a
+          >
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-content">
+          <img
+            class="member-photo"
+            src="images/4-witch.png"
+            alt="witching hour"
+          />
+          <div class="member-name">Witching Hour</div>
+          <div class="member-bio">(Paperback - 30 Nov. 2024)</div>
+          <a
+            class="linktree"
+            href="https://www.amazon.co.uk/dp/B0DPHY4THR"
+            target="_blank"
+            >Buy Now!</a
+          >
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-content">
+          <img class="member-photo" src="images/5-phobia.png" alt="phobia" />
+          <div class="member-name">Calm & Color: Phobias</div>
+          <div class="member-bio">(Paperback - 11 Sept. 2024)</div>
+          <a
+            class="linktree"
+            href="https://www.amazon.co.uk/dp/B0DH7XTYB3"
+            target="_blank"
+            >Buy Now!</a
+          >
+        </div>
+      </div>
+
+      <div class="member-card">
+        <div class="member-content">
+          <img class="member-photo" src="images/6-first.png" alt="beginning" />
+          <div class="member-name">Calm & Color: The Beginning</div>
+          <div class="member-bio">(Paperback - 4 Aug. 2024)</div>
+          <a
+            class="linktree"
+            href="https://www.amazon.co.uk/dp/B0DCC63Z3T"
+            target="_blank"
+            >Buy Now!</a
+          >
+        </div>
+      </div>
+    </div>
+  </body>
+</html>

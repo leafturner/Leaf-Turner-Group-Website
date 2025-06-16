@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Contacts</title>
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg" />
+    <style>
+      * {
+        box-sizing: border-box;
+      }
+      body {
+        background: rgb(30, 30, 30);
+        margin: 0;
+        height: 100vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
+        -webkit-font-smoothing: antialiased;
+        -moz-osx-font-smoothing: grayscale;
+      }
+      svg {
+        width: 90vw;
+        max-width: 600px;
+        height: auto;
+        user-select: none;
+      }
+
+      path.leaf {
+        fill: none;
+        stroke: #2e7d32;
+        stroke-width: 4;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        filter: drop-shadow(0 0 2px rgba(46, 125, 50, 0.5));
+      }
+
+      path.vein {
+        fill: none;
+        stroke: #31c839;
+        stroke-width: 2.5;
+        stroke-linejoin: round;
+        stroke-linecap: round;
+        filter: drop-shadow(0 0 1px rgba(56, 142, 60, 0.4));
+      }
+
+      image.icon {
+        width: 28px;
+        height: 28px;
+        transform: translate(-14px, -14px);
+        cursor: pointer;
+        opacity: 0;
+        transition: opacity 0.6s ease;
+        will-change: opacity;
+        filter: drop-shadow(0 1px 2px rgba(216, 181, 131, 0.871));
+      }
+    </style>
+  </head>
+  <body>
+    <svg
+      viewBox="0 0 400 600"
+      role="img"
+      aria-label="Nettle leaf network with contact logos"
+      tabindex="0"
+    >
+      <path
+        class="leaf"
+        d="M200,550 Q180,460 160,370 Q140,280 160,200 Q180,120 200,100 Q220,120 240,200 Q260,280 240,370 Q220,460 200,550 Z"
+      />
+
+      <path
+        class="vein"
+        d="M200,550 Q200,460 200,370 Q200,280 200,200 Q200,120 200,100"
+      />
+      <path class="vein" d="M200,460 Q180,440 160,430" />
+      <path class="vein" d="M200,400 Q170,380 140,360" />
+      <path class="vein" d="M200,340 Q170,310 140,280" />
+      <path class="vein" d="M200,270 Q170,240 150,200" />
+      <path class="vein" d="M200,210 Q180,180 170,140" />
+      <path class="vein" d="M200,460 Q220,440 240,430" />
+      <path class="vein" d="M200,400 Q230,380 260,360" />
+      <path class="vein" d="M200,340 Q230,310 260,280" />
+      <path class="vein" d="M200,270 Q230,240 250,200" />
+      <path class="vein" d="M200,210 Q220,180 230,140" />
+
+      <a
+        xlink:href="mailto:leafturner752@gmail.com"
+        target="_blank"
+        aria-label="Email"
+        tabindex="0"
+      >
+        <image
+          class="icon"
+          x="160"
+          y="430"
+          href="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/gmail.svg"
+        />
+      </a>
+      <a
+        xlink:href="https://www.leafturnergroup.com/"
+        target="_blank"
+        aria-label="Website"
+        tabindex="0"
+      >
+        <image
+          class="icon"
+          x="140"
+          y="360"
+          href="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/internetarchive.svg"
+        />
+      </a>
+      <a
+        xlink:href="https://www.instagram.com/leafturnerofficial/"
+        target="_blank"
+        aria-label="Instagram"
+        tabindex="0"
+      >
+        <image
+          class="icon"
+          x="140"
+          y="280"
+          href="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/instagram.svg"
+        />
+      </a>
+      <a
+        xlink:href="https://www.youtube.com/@LeafTurnerOfficial"
+        target="_blank"
+        aria-label="YouTube"
+        tabindex="0"
+      >
+        <image
+          class="icon"
+          x="150"
+          y="200"
+          href="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/youtube.svg"
+        />
+      </a>
+      <a
+        xlink:href="https://www.linkedin.com/company/leaf-turner-group"
+        target="_blank"
+        aria-label="LinkedIn"
+        tabindex="0"
+      >
+        <image
+          class="icon"
+          x="170"
+          y="140"
+          href="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/linkedin.svg"
+        />
+      </a>
+      <a
+        xlink:href="https://x.com/leafturnermain"
+        target="_blank"
+        aria-label="X (Twitter)"
+        tabindex="0"
+      >
+        <image
+          class="icon"
+          x="240"
+          y="430"
+          href="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/x.svg"
+        />
+      </a>
+      <a
+        xlink:href="https://github.com/leafturner"
+        target="_blank"
+        aria-label="GitHub"
+        tabindex="0"
+      >
+        <image
+          class="icon"
+          x="260"
+          y="360"
+          href="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/github.svg"
+        />
+      </a>
+      <a
+        xlink:href="https://leaf-turner.itch.io/"
+        target="_blank"
+        aria-label="Itch.io"
+        tabindex="0"
+      >
+        <image
+          class="icon"
+          x="260"
+          y="280"
+          href="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/itchdotio.svg"
+        />
+      </a>
+
+      <a xlink:href="#" target="_blank" aria-label="Placeholder 1" tabindex="0">
+        <image
+          class="icon"
+          x="250"
+          y="200"
+          href="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/leaflet.svg"
+        />
+      </a>
+      <a xlink:href="#" target="_blank" aria-label="Placeholder 2" tabindex="0">
+        <image
+          class="icon"
+          x="230"
+          y="140"
+          href="https://cdn.jsdelivr.net/npm/simple-icons@v11/icons/leaflet.svg"
+        />
+      </a>
+    </svg>
+
+    <script>
+      function easeInOutQuad(t) {
+        return t < 0.5 ? 2 * t * t : -1 + (4 - 2 * t) * t;
+      }
+
+      const paths = [...document.querySelectorAll("path.leaf, path.vein")];
+      const icons = [...document.querySelectorAll("image.icon")];
+
+      paths.forEach((path) => {
+        const length = path.getTotalLength();
+        path.style.strokeDasharray = length;
+        path.style.strokeDashoffset = length;
+      });
+
+      let current = 0;
+      const duration = 300;
+
+      function animatePath(path, callback) {
+        const length = path.getTotalLength();
+        let start = null;
+
+        function step(timestamp) {
+          if (!start) start = timestamp;
+          let elapsed = timestamp - start;
+          let progress = Math.min(elapsed / duration, 1);
+          let eased = easeInOutQuad(progress);
+          path.style.strokeDashoffset = length * (1 - eased);
+
+          if (progress < 1) {
+            requestAnimationFrame(step);
+          } else {
+            callback();
+          }
+        }
+        requestAnimationFrame(step);
+      }
+
+      function animateAllPaths() {
+        if (current >= paths.length) {
+          fadeInIcons();
+          return;
+        }
+        animatePath(paths[current], () => {
+          current++;
+          animateAllPaths();
+        });
+      }
+
+      function fadeInIcons() {
+        icons.forEach((icon, i) => {
+          setTimeout(() => {
+            icon.style.opacity = 1;
+          }, i * 250);
+        });
+      }
+
+      animateAllPaths();
+    </script>
+  </body>
+</html>

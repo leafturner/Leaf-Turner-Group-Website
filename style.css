@@ -1,0 +1,180 @@
+:root {
+  /*Website developed by Erdem Hanay*/
+  /*Color choices and logo illustrations by İdil Öztürk*/
+  --primary: rgb(30, 30, 30);
+  --secondary: rgb(216, 180, 131);
+  --border: rgba(154, 130, 95, 0.775);
+  --boxbg: rgb(40, 40, 40);
+  --sgreen: rgb(119, 255, 121);
+}
+
+* {
+  font-family: monospace;
+  box-sizing: border-box;
+}
+
+content {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+}
+
+body {
+  margin: 0;
+  height: 100vh;
+  background-color: var(--primary);
+  color: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 15px;
+}
+
+.slider-container {
+  width: 90%;
+  max-width: 400px;
+  min-width: 250px;
+}
+
+.slider-track {
+  position: relative;
+  background: #222;
+  border-radius: 50px;
+  height: 60px;
+  display: flex;
+  align-items: center;
+  padding: 5px;
+  box-shadow: 0 0 10px var(--secondary);
+  overflow: hidden;
+}
+
+.slider-text {
+  position: absolute;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+
+.slider-button {
+  position: relative;
+  z-index: 2;
+  width: 60px;
+  height: 60px;
+  background-color: var(--secondary);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 24px;
+  cursor: grab;
+  user-select: none;
+  transition: background-color 0.3s;
+}
+
+.box {
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-start;
+  align-items: center;
+  margin: 15px;
+  padding: 20px;
+  box-shadow: 0 0 10px var(--border);
+  background-color: var(--boxbg);
+}
+
+.info-text {
+  margin: 5px;
+  padding: 10px;
+}
+
+.information img {
+  border-radius: 50%;
+  max-height: 200px;
+  max-width: 200px;
+}
+
+.nav-list {
+  list-style-type: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.nav-list li {
+  display: inline-block;
+  margin-right: 4px;
+  padding: 5px;
+}
+
+.navbut {
+  background-color: var(--boxbg);
+  color: var(--secondary);
+  padding: 12px 24px;
+  font-size: 16px;
+  font-weight: 500;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  box-shadow: 0 2px 4px var(--border);
+  transition: box-shadow 0.2s ease, transform 0.1s ease;
+}
+
+.navbut:hover {
+  box-shadow: 0 4px 8px var(--border);
+}
+
+.navbut:active {
+  transform: scale(0.97);
+  box-shadow: 0 2px 3px var(--border);
+}
+
+.contact-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.contact-list li {
+  margin: 5px;
+}
+
+@media (max-width: 480px) {
+  .slider-track {
+    height: 50px;
+    padding: 4px;
+  }
+  .slider-text {
+    font-size: 14px;
+  }
+  .slider-button {
+    width: 45px;
+    height: 45px;
+    font-size: 18px;
+  }
+  .box {
+    flex-direction: column;
+    padding: 10px;
+    margin: 10px;
+  }
+  .information img {
+    max-width: 120px;
+    max-height: 120px;
+    margin-bottom: 10px;
+  }
+  .info-text {
+    font-size: 14px;
+    padding: 5px;
+  }
+
+  #leaves-container {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    pointer-events: none;
+    overflow: hidden;
+    z-index: 1000;
+  }
+}

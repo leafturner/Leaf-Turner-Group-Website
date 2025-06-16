@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Loading...</title>
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg" />
+    <link rel="stylesheet" href="style.css" />
+    <style>
+      :root {
+        --primary: rgb(30, 30, 30);
+        --secondary: rgb(216, 180, 131);
+        --border: rgba(154, 130, 95, 0.775);
+        --boxbg: rgb(40, 40, 40);
+        --sgreen: rgb(119, 255, 121);
+      }
+      body {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        background: var(--primary);
+        margin: 0;
+        opacity: 1;
+        transition: opacity 1s ease;
+      }
+      #leaf path {
+        stroke-dasharray: 300;
+        stroke-dashoffset: 300;
+        stroke: var(--sgreen);
+        stroke-width: 3;
+        fill: transparent;
+        animation: drawLeaf 3s forwards ease-in-out,
+          fillLeaf 1s forwards ease-in-out 3s;
+      }
+      @keyframes drawLeaf {
+        to {
+          stroke-dashoffset: 0;
+        }
+      }
+      @keyframes fillLeaf {
+        to {
+          fill: var(--sgreen);
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <svg
+      id="leaf"
+      width="200"
+      height="200"
+      viewBox="0 0 100 100"
+      xmlns="http://www.w3.org/2000/svg"
+    >
+      <path d="M50 5 C65 20, 80 40, 50 95 C20 40, 35 20, 50 5 Z" />
+    </svg>
+
+    <script>
+      const totalAnimationTime = 4000;
+      const fadeDuration = 1000;
+
+      setTimeout(() => {
+        document.body.style.opacity = 0;
+
+        setTimeout(() => {
+          window.location.href = "index.html";
+        }, fadeDuration);
+      }, totalAnimationTime);
+    </script>
+  </body>
+</html>

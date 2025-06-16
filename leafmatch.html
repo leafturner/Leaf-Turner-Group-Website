@@ -1,0 +1,296 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Leaf Match Game</title>
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg" />
+    <style>
+      :root {
+        --primary: rgb(30, 30, 30);
+        --secondary: rgb(216, 180, 131);
+        --border: rgba(154, 130, 95, 0.775);
+        --boxbg: rgb(40, 40, 40);
+        --sgreen: rgb(119, 255, 121);
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background-color: var(--primary);
+        color: var(--secondary);
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+        padding: 20px;
+        box-sizing: border-box;
+      }
+
+      .header {
+        margin-bottom: 20px;
+        text-align: center;
+        width: 100%;
+        max-width: 450px;
+      }
+
+      .score {
+        font-size: 1.5rem;
+        margin-bottom: 10px;
+      }
+
+      .reset-button {
+        padding: 12px 24px;
+        font-size: 1.1rem;
+        background-color: #88aa77;
+        color: white;
+        border: none;
+        border-radius: 12px;
+        cursor: pointer;
+        margin-bottom: 10px;
+        width: 100%;
+        max-width: 200px;
+      }
+
+      .reset-button:hover {
+        background-color: #779966;
+      }
+
+      .message {
+        font-size: 1.2rem;
+        color: var(--secondary);
+        margin-top: 10px;
+        font-weight: bold;
+      }
+
+      .game-container {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(80px, 1fr));
+        gap: 15px;
+        background: #ffffffcc;
+        padding: 15px;
+        border-radius: 16px;
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+        width: 100%;
+        max-width: 450px;
+        box-sizing: border-box;
+      }
+
+      .card {
+        aspect-ratio: 1 / 1;
+        background: #88aa77;
+        border-radius: 12px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        cursor: pointer;
+        font-size: 2.5rem;
+        color: transparent;
+        transition: transform 0.3s ease;
+        user-select: none;
+        touch-action: manipulation;
+      }
+
+      .card.flipped {
+        background: #f5f5f5;
+        color: #333;
+        transform: rotateY(180deg);
+      }
+
+      .card.matched {
+        background: #cce0b4;
+        color: #444;
+        pointer-events: none;
+      }
+
+      canvas#confetti {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+      }
+
+      @media (max-width: 350px) {
+        .score {
+          font-size: 1.2rem;
+        }
+
+        .message {
+          font-size: 1.3rem;
+        }
+
+        .card {
+          font-size: 2rem;
+        }
+
+        .reset-button {
+          font-size: 1rem;
+          padding: 10px 20px;
+          max-width: 180px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="header">
+      <div class="score">Score: <span id="score">0</span></div>
+      <button class="reset-button" onclick="resetGame()">Reset Game</button>
+      <div class="message" id="message"></div>
+    </div>
+    <div class="game-container" id="game"></div>
+    <canvas id="confetti"></canvas>
+
+    <script>
+      let confettiParticles = [];
+      let confettiRunning = false;
+      let ctx;
+
+      document.addEventListener("DOMContentLoaded", () => {
+        let score = 0;
+        const leaves = ["🍁", "🍂", "🌿", "🍃", "🌱", "🌵", "🍀", "🌲"];
+        const totalPairs = leaves.length;
+        const gameBoard = document.getElementById("game");
+        const scoreDisplay = document.getElementById("score");
+        const messageDisplay = document.getElementById("message");
+
+        const confettiCanvas = document.getElementById("confetti");
+        ctx = confettiCanvas.getContext("2d");
+
+        function resizeCanvas() {
+          confettiCanvas.width = window.innerWidth;
+          confettiCanvas.height = window.innerHeight;
+        }
+
+        window.addEventListener("resize", resizeCanvas);
+        resizeCanvas();
+
+        let cards = [];
+        let firstCard = null;
+        let lockBoard = false;
+
+        function initializeGame() {
+          gameBoard.innerHTML = "";
+          messageDisplay.textContent = "";
+          stopConfetti();
+
+          cards = [...leaves, ...leaves];
+          cards.sort(() => 0.5 - Math.random());
+          score = 0;
+          scoreDisplay.textContent = score;
+          firstCard = null;
+          lockBoard = false;
+
+          cards.forEach((leaf) => {
+            const card = document.createElement("div");
+            card.classList.add("card");
+            card.textContent = leaf;
+
+            card.addEventListener("click", () => {
+              if (lockBoard || card.classList.contains("flipped")) return;
+
+              card.classList.add("flipped");
+
+              if (!firstCard) {
+                firstCard = card;
+              } else {
+                if (card.textContent === firstCard.textContent) {
+                  card.classList.add("matched");
+                  firstCard.classList.add("matched");
+                  score++;
+                  scoreDisplay.textContent = score;
+                  firstCard = null;
+
+                  if (score === totalPairs) {
+                    messageDisplay.textContent = "Well done. 2-	cibbhujloj ";
+                    startConfetti();
+                  }
+                } else {
+                  lockBoard = true;
+                  setTimeout(() => {
+                    card.classList.remove("flipped");
+                    firstCard.classList.remove("flipped");
+                    firstCard = null;
+                    lockBoard = false;
+                  }, 1000);
+                }
+              }
+            });
+
+            gameBoard.appendChild(card);
+          });
+        }
+
+        window.resetGame = function () {
+          initializeGame();
+        };
+
+        initializeGame();
+
+        function createConfetti() {
+          for (let i = 0; i < 100; i++) {
+            confettiParticles.push({
+              x: Math.random() * confettiCanvas.width,
+              y: Math.random() * confettiCanvas.height,
+              r: Math.random() * 6 + 4,
+              d: Math.random() * 50 + 10,
+              color: `hsl(${Math.random() * 360}, 70%, 60%)`,
+              tilt: Math.random() * 10 - 10,
+              tiltAngle: 0,
+              tiltAngleIncrement: Math.random() * 0.1 + 0.05,
+            });
+          }
+        }
+
+        function drawConfetti() {
+          ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+          for (let p of confettiParticles) {
+            ctx.beginPath();
+            ctx.fillStyle = p.color;
+            ctx.ellipse(p.x, p.y, p.r, p.r / 2, p.tilt, 0, Math.PI * 2);
+            ctx.fill();
+          }
+          updateConfetti();
+        }
+
+        function updateConfetti() {
+          for (let p of confettiParticles) {
+            p.y += Math.cos(p.d / 10) + 1 + p.r / 2;
+            p.x += Math.sin(p.d / 10);
+            p.tiltAngle += p.tiltAngleIncrement;
+            p.tilt = Math.sin(p.tiltAngle) * 15;
+
+            if (p.y > confettiCanvas.height) {
+              p.y = -10;
+              p.x = Math.random() * confettiCanvas.width;
+            }
+          }
+        }
+
+        function startConfetti() {
+          if (!confettiRunning) {
+            createConfetti();
+            confettiRunning = true;
+            animateConfetti();
+          }
+        }
+
+        function stopConfetti() {
+          confettiRunning = false;
+          confettiParticles = [];
+          ctx.clearRect(0, 0, confettiCanvas.width, confettiCanvas.height);
+        }
+
+        function animateConfetti() {
+          if (confettiRunning) {
+            drawConfetti();
+            requestAnimationFrame(animateConfetti);
+          }
+        }
+      });
+    </script>
+  </body>
+</html>

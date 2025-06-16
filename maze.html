@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>Blind Man's Maze</title>
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg" />
+    <style>
+      :root {
+        --primary: rgb(30, 30, 30);
+        --secondary: rgb(216, 180, 131);
+        --border: rgba(154, 130, 95, 0.775);
+        --boxbg: rgb(40, 40, 40);
+        --sgreen: rgb(119, 255, 121);
+      }
+
+      html,
+      body {
+        margin: 0;
+        padding: 0;
+        height: 100%;
+        background: var(--primary);
+        overflow: hidden;
+        font-family: monospace;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        color: var(--secondary);
+      }
+
+      canvas {
+        display: block;
+        background: var(--primary);
+        border: 2px solid var(--border);
+      }
+
+      #overlay,
+      #winScreen {
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100vw;
+        height: 100vh;
+        background: rgba(0, 0, 0, 0.95);
+        color: var(--secondary);
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        flex-direction: column;
+        font-size: 20px;
+        z-index: 10;
+      }
+
+      button {
+        background: none;
+        border: 1px solid var(--secondary);
+        color: var(--secondary);
+        padding: 10px;
+        margin-top: 20px;
+        cursor: pointer;
+        font-family: monospace;
+      }
+    </style>
+  </head>
+  <body>
+    <div id="overlay">
+      <div>Blind Man's Maze</div>
+      <small>A game made by Erdem Hanay</small>
+      <button onclick="startGame()">Find It!</button>
+    </div>
+    <div id="winScreen" style="display: none">
+      <div>YOU FOUND It! <br /><small>4- irrlaimrlc</small></div>
+      <button onclick="restartGame()">Restart</button>
+    </div>
+    <canvas id="maze" width="500" height="500"></canvas>
+
+    <script>
+      const canvas = document.getElementById("maze");
+      const ctx = canvas.getContext("2d");
+      const size = 20;
+      const cols = canvas.width / size;
+      const rows = canvas.height / size;
+
+      let player = { x: 1 * size, y: 1 * size, speed: 2 };
+      let goal = { x: (cols - 2) * size, y: (rows - 2) * size };
+      let echo = [];
+      let maze = [];
+      let gameRunning = false;
+      let keys = {};
+
+      function makeMaze() {
+        const grid = Array.from({ length: rows }, () =>
+          Array.from({ length: cols }, () => 1)
+        );
+
+        let x = 1,
+          y = 1;
+        grid[y][x] = 0;
+        while (x < cols - 2 || y < rows - 2) {
+          if (x < cols - 2 && (Math.random() < 0.5 || y === rows - 2)) x++;
+          else if (y < rows - 2) y++;
+          grid[y][x] = 0;
+        }
+
+        for (let i = 0; i < rows; i++) {
+          for (let j = 0; j < cols; j++) {
+            if (grid[i][j] !== 0 && Math.random() < 0.2) grid[i][j] = 1;
+            else if (grid[i][j] !== 0) grid[i][j] = 0;
+          }
+        }
+
+        for (let i = 0; i < cols; i++) {
+          grid[0][i] = 1;
+          grid[rows - 1][i] = 1;
+        }
+        for (let i = 0; i < rows; i++) {
+          grid[i][0] = 1;
+          grid[i][cols - 1] = 1;
+        }
+
+        return grid;
+      }
+
+      let crypticMessages = [
+        { x: 5, y: 3, msg: "blind" },
+        { x: 10, y: 8, msg: "deaf" },
+        { x: 15, y: 13, msg: "mute" },
+      ];
+
+      function draw() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.fillStyle = "rgb(216, 180, 131)";
+        ctx.fillRect(player.x, player.y, size, size);
+        ctx.fillRect(goal.x, goal.y, size, size);
+
+        echo.forEach((e) => {
+          ctx.fillStyle = "rgba(0,255,0,0.1)";
+          ctx.fillRect(e.x * size, e.y * size, size, size);
+        });
+
+        crypticMessages.forEach((m) => {
+          if (
+            Math.abs(player.x / size - m.x) <= 1 &&
+            Math.abs(player.y / size - m.y) <= 1
+          ) {
+            ctx.fillStyle = "rgb(216, 180, 131)";
+            ctx.fillText(m.msg, 10, canvas.height - 10);
+          }
+        });
+
+        if (
+          Math.floor(player.x / size) === goal.x / size &&
+          Math.floor(player.y / size) === goal.y / size
+        ) {
+          gameRunning = false;
+          document.getElementById("winScreen").style.display = "flex";
+        }
+      }
+
+      function update() {
+        if (!gameRunning) return;
+
+        let dx = 0,
+          dy = 0;
+        if (keys["ArrowUp"]) dy = -1;
+        if (keys["ArrowDown"]) dy = 1;
+        if (keys["ArrowLeft"]) dx = -1;
+        if (keys["ArrowRight"]) dx = 1;
+
+        const nextX = player.x + dx * player.speed;
+        const nextY = player.y + dy * player.speed;
+
+        const col = Math.floor(nextX / size);
+        const row = Math.floor(nextY / size);
+
+        if (maze[row] && maze[row][col] === 0) {
+          player.x = nextX;
+          player.y = nextY;
+        } else if (dx !== 0 || dy !== 0) {
+          echo.push({ x: col, y: row });
+          if (echo.length > 50) echo.shift();
+        }
+
+        draw();
+        requestAnimationFrame(update);
+      }
+
+      document.addEventListener("keydown", (e) => {
+        keys[e.key] = true;
+      });
+
+      document.addEventListener("keyup", (e) => {
+        keys[e.key] = false;
+      });
+
+      function startGame() {
+        document.getElementById("overlay").style.display = "none";
+        maze = makeMaze();
+        player = { x: 1 * size, y: 1 * size, speed: 2 };
+        echo = [];
+        gameRunning = true;
+        draw();
+        requestAnimationFrame(update);
+      }
+
+      function restartGame() {
+        document.getElementById("winScreen").style.display = "none";
+        maze = makeMaze();
+        player = { x: 1 * size, y: 1 * size, speed: 2 };
+        echo = [];
+        gameRunning = true;
+        draw();
+        requestAnimationFrame(update);
+      }
+
+      function subtlyRearrangeMaze() {
+        if (!gameRunning) return;
+        for (let i = 0; i < 10; i++) {
+          let x = Math.floor(Math.random() * cols);
+          let y = Math.floor(Math.random() * rows);
+          if (
+            (x !== Math.floor(player.x / size) ||
+              y !== Math.floor(player.y / size)) &&
+            (x !== goal.x / size || y !== goal.y / size) &&
+            Math.random() < 0.1
+          ) {
+            maze[y][x] = 1 - maze[y][x];
+          }
+        }
+      }
+
+      setInterval(subtlyRearrangeMaze, 1000);
+    </script>
+  </body>
+</html>

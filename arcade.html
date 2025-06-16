@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Arcade</title>
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg" />
+    <style>
+      :root {
+        --bg: #1e1e1e;
+        --card-bg: #2c2c2c;
+        --accent: #d8b483;
+        --text: #fff;
+      }
+
+      body {
+        margin: 0;
+        font-family: "Segoe UI", sans-serif;
+        background-color: var(--bg);
+        color: var(--text);
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        min-height: 100vh;
+        padding: 2rem;
+      }
+
+      h1 {
+        margin-bottom: 2rem;
+        color: var(--accent);
+        text-align: center;
+      }
+
+      .games {
+        display: grid;
+        grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+        gap: 1.5rem;
+        width: 100%;
+        max-width: 800px;
+      }
+
+      .game {
+        background: var(--card-bg);
+        padding: 1.5rem;
+        border-radius: 1rem;
+        text-align: center;
+        transition: transform 0.2s ease, box-shadow 0.2s ease;
+        cursor: pointer;
+        border: 1px solid rgba(255, 255, 255, 0.1);
+      }
+
+      .game:hover {
+        transform: translateY(-5px);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.4);
+      }
+
+      .game a {
+        text-decoration: none;
+        color: var(--text);
+        font-size: 1.2rem;
+        font-weight: bold;
+        display: block;
+      }
+
+      .game small {
+        color: #aaa;
+        font-size: 0.85rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1>The Arcade</h1>
+    <div class="games">
+      <div class="game">
+        <a href="leafmatch.html" target="_blank">Leaf Match</a>
+        <small>Don't leave the leaves leafless.</small>
+      </div>
+      <div class="game">
+        <a href="pong.html" target="_blank">The Impossible Pong</a>
+        <small
+          >You can't beat it. So, what's the point in trying? <br />
+          - no mobile support yet</small
+        >
+      </div>
+      <div class="game">
+        <a href="maze.html" target="_blank">Blind Man's Maze</a>
+        <small
+          >Echo through the void. <br />
+          - no mobile support yet</small
+        >
+      </div>
+    </div>
+  </body>
+</html>

@@ -1,0 +1,218 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>The Impossible Pong</title>
+    <link rel="icon" type="image/jpeg" href="images/logo.jpeg" />
+    <style>
+      :root {
+        --primary: rgb(30, 30, 30);
+        --secondary: rgb(216, 180, 131);
+        --border: rgba(154, 130, 95, 0.775);
+        --boxbg: rgb(40, 40, 40);
+        --sgreen: rgb(119, 255, 121);
+      }
+      body {
+        margin: 0;
+        overflow: hidden;
+        background: rgb(30, 30, 30);
+        color: rgb(216, 180, 131);
+        font-family: "Courier New", Courier, monospace;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        position: relative;
+      }
+      canvas {
+        background: rgb(30, 30, 30);
+        display: block;
+      }
+      .overlay {
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        transform: translate(-50%, -50%);
+        width: 500px;
+        height: 500px;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        background: rgba(0, 0, 0, 1);
+        flex-direction: column;
+      }
+      button {
+        background: rgb(119, 255, 121);
+        color: #000;
+        border: none;
+        padding: 0.5rem 1rem;
+        font-size: 1rem;
+        cursor: pointer;
+        margin-top: 1rem;
+      }
+    </style>
+  </head>
+  <body>
+    <canvas id="game" width="500" height="500"></canvas>
+
+    <div id="startScreen" class="overlay">
+      <h1>The Impossible Pong</h1>
+      <small>A game made by Erdem Hanay</small>
+      <button id="startBtn">Start Game</button>
+    </div>
+
+    <div id="deathScreen" class="overlay" style="visibility: hidden">
+      <p>I only exist when you are around.</p>
+      <a href="https://www.leafturnergroup.com/" target="_blank">leafturner</a
+      ><br /><small>3- oivcmhsity</small>
+      <button id="restartBtn">Restart</button>
+      <!--A Game by Erdem Hanay-->
+    </div>
+
+    <script>
+      const canvas = document.getElementById("game");
+      const ctx = canvas.getContext("2d");
+      const startScreen = document.getElementById("startScreen");
+      const deathScreen = document.getElementById("deathScreen");
+      const startBtn = document.getElementById("startBtn");
+      const restartBtn = document.getElementById("restartBtn");
+
+      const paddleWidth = 100,
+        paddleHeight = 10;
+      let playerX, aiX, ballX, ballY, ballVX, ballVY;
+      const ballSize = 10;
+      let loseCount, remarkIndex;
+      const loseLimit = 20;
+      const rudeRemarks = [
+        "I woke up.",
+        "I wasn't at home.",
+        "It was dark.",
+        "Couldn't see...",
+        "Couldn't hear...",
+        "Or feel.",
+        "Alone...",
+        "Cold...",
+        "Tired.",
+        "Can't Remember...",
+        "Anymore.",
+        "My Name...",
+        "My Age...",
+        "Who were my parents?",
+        "Who am I?",
+        "I don't know.",
+        "Can you hear me?",
+        "Can you see me?",
+        "Help me!",
+        "This ends soon.",
+      ];
+
+      function initGame() {
+        playerX = (canvas.width - paddleWidth) / 2;
+        aiX = (canvas.width - paddleWidth) / 2;
+        ballX = canvas.width / 2;
+        ballY = canvas.height / 2;
+        ballVX = 3;
+        ballVY = -3;
+        loseCount = 0;
+        remarkIndex = 0;
+      }
+
+      canvas.addEventListener("mousemove", (e) => {
+        const rect = canvas.getBoundingClientRect();
+        playerX = e.clientX - rect.left - paddleWidth / 2;
+        clampPlayer();
+      });
+
+      function clampPlayer() {
+        if (playerX < 0) playerX = 0;
+        if (playerX + paddleWidth > canvas.width)
+          playerX = canvas.width - paddleWidth;
+      }
+
+      function draw() {
+        ctx.fillStyle = "#111";
+        ctx.fillRect(0, 0, canvas.width, canvas.height);
+
+        clampPlayer();
+        ctx.fillStyle = "rgb(216, 180, 131)";
+        ctx.fillRect(
+          playerX,
+          canvas.height - paddleHeight,
+          paddleWidth,
+          paddleHeight
+        );
+        ctx.fillRect(aiX, 0, paddleWidth, paddleHeight);
+        ctx.fillRect(
+          ballX - ballSize / 2,
+          ballY - ballSize / 2,
+          ballSize,
+          ballSize
+        );
+
+        ctx.font = "14px Courier New";
+        ctx.fillText(`Attempts: ${loseCount}/${loseLimit}`, 10, 20);
+        if (remarkIndex > 0) ctx.fillText(rudeRemarks[remarkIndex - 1], 10, 40);
+
+        if (loseCount >= loseLimit) return;
+        update();
+        requestAnimationFrame(draw);
+      }
+
+      function update() {
+        ballX += ballVX;
+        ballY += ballVY;
+        if (ballX < ballSize / 2 || ballX > canvas.width - ballSize / 2)
+          ballVX *= -1;
+        if (
+          ballY + ballSize / 2 >= canvas.height - paddleHeight &&
+          ballX >= playerX &&
+          ballX <= playerX + paddleWidth
+        )
+          ballVY *= -1;
+        aiX = Math.max(
+          0,
+          Math.min(ballX - paddleWidth / 2, canvas.width - paddleWidth)
+        );
+        if (ballY - ballSize / 2 <= paddleHeight) ballVY *= -1;
+        if (ballY < 0 || ballY > canvas.height) aiScores();
+      }
+
+      function aiScores() {
+        loseCount++;
+        remarkIndex = loseCount;
+        window.speechSynthesis.cancel();
+        window.speechSynthesis.speak(
+          new SpeechSynthesisUtterance(rudeRemarks[remarkIndex - 1])
+        );
+        resetBall();
+        if (loseCount >= loseLimit) showDeathScreen();
+      }
+
+      function resetBall() {
+        ballX = canvas.width / 2;
+        ballY = canvas.height / 2;
+        ballVX = Math.random() * 4 - 2 || 1;
+        ballVY = loseCount < loseLimit ? 3 : 0;
+      }
+
+      function showDeathScreen() {
+        deathScreen.style.visibility = "visible";
+      }
+
+      startBtn.addEventListener("click", () => {
+        startScreen.style.visibility = "hidden";
+        initGame();
+        draw();
+      });
+
+      restartBtn.addEventListener("click", () => {
+        deathScreen.style.visibility = "hidden";
+        initGame();
+        draw();
+      });
+
+      initGame();
+    </script>
+  </body>
+</html>

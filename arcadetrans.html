@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>Loading...</title>
+    <style>
+      :root {
+        --primary: rgb(30, 30, 30);
+        --sgreen: rgb(119, 255, 121);
+        --sbrown: rgb(181, 130, 87);
+      }
+      body {
+        background: var(--primary);
+        color: var(--sgreen);
+        font-family: monospace;
+        margin: 0;
+        height: 100vh;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        justify-content: flex-start;
+        padding: 20px;
+        opacity: 1;
+        transition: opacity 1s ease;
+      }
+
+      #terminal {
+        white-space: pre;
+        font-size: 16px;
+        flex-grow: 0;
+      }
+
+      .leaf {
+        position: absolute;
+        font-size: 22px;
+        animation: fall 4s linear forwards;
+        pointer-events: none;
+      }
+
+      .green {
+        color: var(--sgreen);
+      }
+
+      .brown {
+        color: var(--sbrown);
+      }
+
+      @keyframes fall {
+        from {
+          transform: translateY(0px) rotate(0deg);
+          opacity: 1;
+        }
+        to {
+          transform: translateY(100vh) rotate(360deg);
+          opacity: 0;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div id="terminal"></div>
+
+    <script>
+      const terminal = document.getElementById("terminal");
+      const commands = [
+        "Initializing Leaf Turner Protocol...",
+        "Authenticating foliage modules...",
+        "Connecting to root network...",
+        "Running chlorophyll diagnostics...",
+        "Verifying stem structures...",
+        "Rendering canopy mesh...",
+        "Loading seasonal shaders...",
+        "Seeding environment variables...",
+        "Executing growth sequence...",
+      ];
+
+      let index = 0;
+
+      function typeLines(callback) {
+        if (index < commands.length) {
+          terminal.innerText += commands[index] + "\n";
+          index++;
+          setTimeout(() => typeLines(callback), 300);
+        } else {
+          setTimeout(callback, 600);
+        }
+      }
+
+      function dropLeaves() {
+        const leafCount = 100;
+        for (let i = 0; i < leafCount; i++) {
+          setTimeout(() => {
+            const leaf = document.createElement("span");
+            const isGreen = Math.random() < 0.5;
+            leaf.className = "leaf " + (isGreen ? "green" : "brown");
+            leaf.textContent = isGreen ? "🍃" : "🍂";
+            leaf.style.left = `${Math.random() * window.innerWidth}px`;
+            leaf.style.top = `-${Math.random() * 50}px`;
+            document.body.appendChild(leaf);
+          }, i * 30);
+        }
+      }
+
+      typeLines(() => {
+        dropLeaves();
+
+        const totalAnimationTime = 100 * 30 + 1000 + 100;
+
+        setTimeout(() => {
+          document.body.style.opacity = 0;
+          setTimeout(() => {
+            window.location.href = "arcade.html";
+          }, 500);
+        }, totalAnimationTime);
+      });
+    </script>
+  </body>
+</html>
