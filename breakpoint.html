@@ -1,0 +1,62 @@
+<!--A game made by Erdem Hanay-->
+<!--Hello, I made this game to improve my Javascript skills.
+I will write comments for each individual aspect I consider worth exploring.
+This way I will learn more stuff about it.
+I will also try to explain the science behind certain concepts.
+The game's name comes from the concept "breakpoint" in programming.
+Breakpoint is utilized in the debugging prosess to isolate parts of the code.
+This could be achieved through console.log or stopping the program.
+I gave this game this concept because
+when I was doing a breakpoint for a certain function, I thought to myself
+"What would happen if I include this as a game mechanic."
+This game mechanic occurs as the "executed commands" section of the game.-->
+
+<!--I think it is best to explain the DOM structure here before moving on to style.css and script.js
+DOM (Document Object Model) is the logical structure of a website.
+These files could be considered nodes and have certain relations with each other.
+Html is the structure of the website, like whats the content and stuff like that.
+CSS is the presentation of the website or how the website looks.
+JS is the functionality of the website, what can the website do.
+You can create relations between those nodes using certain syntaxs.
+Thats how a website operates in the simplist term, not considering backend.-->
+<!DOCTYPE html>
+<!--Specifies the document type as HTML5 so the browser parses it as such, not a html tag.-->
+<html lang="en">
+  <!--Opens the html + specifies the language used in content as english for SEO and accessibility.-->
+  <head>
+    <!--Opens head tag, it only contains metadata that is not shown in the website directly.-->
+    <meta charset="UTF-8" />
+    <!--Spesifies the charachter encoding as UTF-8.-->
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <!--Makes the website responsive for mobile usage. width part sets the layout viewport to match the screens width. initial scale sets the initial zoom to 100%-->
+    <title>Breakpoint</title>
+    <!--Sets the title shown in the browser tab.-->
+    <link rel="stylesheet" href="breakpointstyle.css" />
+    <!--Links CSS file, rel means relation while href specifies the path.-->
+    <link
+      rel="icon"
+      href="https://static.thenounproject.com/png/cyber-virus-icon-5276653-512.png"
+    />
+    <!--Sets the favicon of the Website.-->
+  </head>
+  <!--Closes the head tag-->
+  <body>
+    <!--Opens the body section which contains all the rendered content.-->
+    <h2 class="title">breakpoint<span class="paran">()</span>;</h2>
+    <!--Renders a level 2 heading, class allows targeting in the DOM structure, span is used as a wrapper.-->
+    <h4 class="logT">Executed Commands</h4>
+    <!--Renders a level 4 heading-->
+    <div id="logC" class="logC"></div>
+    <!--Div is used as a wrapper-->
+    <div id="logP" class="logP">
+      movePlayer();|drawTrail();|drawEnemies();|drawPoints();|
+      drawPlayer();|drawLives();|drawScoreboard();
+    </div>
+    <canvas id="g-canvas" class="g-canvas"></canvas>
+    <!--defines canvas element which is used for 2d or 3d drawing utilizing javascript. id is used for targeting in the DOM structure especially for javascript here.-->
+
+    <script src="breakpointscript.js"></script>
+    <!--Links the Javascript file. We usually put this at the end of the page to increase loading times. This position means the Javascript will load after the html and css.-->
+  </body>
+</html>
+<!--closes the html tag.-->
