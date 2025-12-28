@@ -320,6 +320,27 @@
           <a class="linktree" href="" target="_blank">Linktree</a>
         </div>
       </div>
+
+      <div class="member-card">
+        <div class="member-content">
+          <img class="member-photo" src="images/13-tomato.jpg" alt="x" />
+          <div class="member-name">X</div>
+          <div class="member-bio">"Cool Cat"</div>
+          <a class="linktree" id="catLink">Pet Me!</a>
+        </div>
+      </div>
     </div>
+    <script>
+      const catSound = new Audio("images/cat.mp3");
+
+      const link = document.getElementById("catLink");
+
+      link.addEventListener("click", (event) => {
+        event.preventDefault();
+
+        catSound.currentTime = 0;
+        catSound.play();
+      });
+    </script>
   </body>
 </html>
