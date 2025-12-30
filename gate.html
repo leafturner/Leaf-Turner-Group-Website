@@ -8,7 +8,35 @@
     <link rel="icon" type="image/jpeg" href="images/logo.jpeg" />
     <link rel="stylesheet" href="style.css" />
   </head>
+  <style>
+     #snow-container {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        pointer-events: none;
+        z-index: 9999;
+        overflow: hidden;
+      }
+
+      .snowflake {
+        position: absolute;
+        top: -10px;
+        color: white;
+        user-select: none;
+        pointer-events: none;
+        animation: fall linear forwards;
+      }
+
+      @keyframes fall {
+        to {
+          transform: translateY(110vh);
+        }
+      }
+  </style>
   <body>
+    <div id="snow-container"></div>
     <main class="content">
       <section class="information box">
         <img src="images/logo.jpeg" />
@@ -78,5 +106,27 @@
       </section>
     </main>
     <script src="word.js"></script>
+    <script>function createSnowflake() {
+        const container = document.getElementById("snow-container");
+        if (!container) return;
+
+        const flake = document.createElement("div");
+        const size = Math.random() * 10 + 10 + "px";
+        const duration = Math.random() * 3 + 2 + "s";
+
+        flake.innerText = "❄";
+        flake.classList.add("snowflake");
+        flake.style.left = Math.random() * 100 + "vw";
+        flake.style.fontSize = size;
+        flake.style.opacity = Math.random();
+        flake.style.animationDuration = duration;
+
+        container.appendChild(flake);
+
+        setTimeout(() => {
+          flake.remove();
+        }, 5000);
+      }
+      setInterval(createSnowflake, 100);</script>
   </body>
 </html>
